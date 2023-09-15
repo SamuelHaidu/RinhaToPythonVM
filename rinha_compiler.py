@@ -1,15 +1,10 @@
-from typing import List, Literal, Optional
-
-from bytecode import Bytecode, Compare, Instr, CellVar, FreeVar, dump_bytecode, Label
-from compiler.ast.ast_objects import Term
-from compiler.ast.rinha_ast import parse_json_to_object, print_term_tree
+from typing import List
+from bytecode import Bytecode, Compare, Instr, CellVar, FreeVar, Label
+from compiler.ast.rinha_ast import parse_json_to_object
 import json
-
-from typing import Any, Dict
+from typing import Dict
 from compiler.ast.ast_objects import (
     BinaryOp,
-    Parameter,
-    Term,
     Var,
     Function,
     Call,
@@ -24,7 +19,6 @@ from compiler.ast.ast_objects import (
     Second,
     Print,
     File,
-    Location,
 )
 
 
@@ -158,19 +152,6 @@ class Compiler:
     def to_bytecode(self, term, bytecode: Bytecode, scope="module") -> Bytecode:
         if isinstance(term, File):
             self.filename = term.name
-            # load first and second
-            # bytecode.extend(
-            #     [
-            #         Instr("LOAD_CONST", self.first.__code__),
-            #         Instr("LOAD_CONST", self.first.__name__),
-            #         Instr("MAKE_FUNCTION", 0),
-            #         Instr("STORE_GLOBAL", self.second.__name__),
-            #         Instr("LOAD_CONST", self.second.__code__),
-            #         Instr("LOAD_CONST", self.second.__name__),
-            #         Instr("MAKE_FUNCTION", 0),
-            #         Instr("STORE_GLOBAL", self.second.__name__),
-            #     ]
-            # )
             bytecode = self.to_bytecode(term.expression, bytecode, "module")
             bytecode.extend(
                 [Instr("POP_TOP"), Instr("LOAD_CONST", None), Instr("RETURN_VALUE")]
