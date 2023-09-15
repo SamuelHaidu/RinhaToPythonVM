@@ -19,7 +19,6 @@ from compiler.ast.ast_objects import (
 
 
 def print_tree(node, depth=0):
-    indent = "  " * depth
     prefix = "│   " * (depth - 1) + "├─ " if depth > 0 else ""
 
     def format_node(node):
