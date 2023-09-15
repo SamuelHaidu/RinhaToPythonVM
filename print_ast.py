@@ -1,5 +1,5 @@
 import json
-from compiler.ast.rinha_ast import parse_json_to_object
+from compiler.ast.json_parser import parse_json_to_object
 from compiler.ast.ast_objects import (
     Var,
     Function,

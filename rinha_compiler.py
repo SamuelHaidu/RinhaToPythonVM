@@ -1,6 +1,6 @@
 from typing import List
 from bytecode import Bytecode, Compare, Instr, CellVar, FreeVar, Label
-from compiler.ast.rinha_ast import parse_json_to_object
+from compiler.ast.json_parser import parse_json_to_object
 import json
 from typing import Dict
 from compiler.ast.ast_objects import (
