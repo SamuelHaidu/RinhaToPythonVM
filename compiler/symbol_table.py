@@ -1,4 +1,5 @@
-from typing import Dict, List
+from dataclasses import dataclass
+from typing import Dict, Literal, Optional
 from compiler.ast import (
     Var,
     Function,
@@ -7,97 +8,111 @@ from compiler.ast import (
     Binary,
     File,
 )
+from compiler.ast.json_parser import parse_json_to_object
+
+
+@dataclass(slots=True)
+class Symbol:
+    name: str
+    symbol_type: Literal["Var", "Function"]
+    load_type: Literal["GLOBAL", "NAME", "FAST", "DEREF"]
+    context_name: str
+    referenced_count: int = 0
+
 
 class SymbolTable:
-    def __init__(self):
-        self.table = {}
+    module_context_name = "<rinha:module>"
+    def __init__(self, context_name: str = None, parent: "SymbolTable" = None):
+        self.context_name = context_name or self.module_context_name
+        self._context_symbols: Dict[str, Symbol] = {}
+        self.parent: SymbolTable = parent
+        self._tables: Dict[str, SymbolTable] = {}
 
-    def insert(self, scope, name, load_type=None):
-        if scope == "module":
-            load_type = "NAME"
-        else:
-            load_type = "FAST"
-        if scope not in self.table:
-            self.table[scope] = {}
-        self.table[scope][name] = {"load_type": load_type}
+    def get_context(self, context_name: str) -> Optional["SymbolTable"]:
+        return self._tables.get(context_name)
 
-    def lookup(self, name) -> List[str]:
-        # returns a list of scopes where the name was found
-        finds = []
-        for scope in self.table:
-            if name in self.table[scope]:
-                finds.append(scope)
-        return finds
+    def lookup(self, symbol_name: str) -> Symbol | None:
+        symbol = self._context_symbols.get(symbol_name)
+        if symbol:
+            return symbol
 
-    def insert_load(self, scope, name):
-        finds = self.lookup(name)
-        if len(finds) == 0:
-            raise Exception(f"Symbol {name} not found!")
+        if symbol_name == self.context_name:  # Special case, load recursive function
+            return Symbol(symbol_name, "Function", "GLOBAL", self.context_name)
 
-        finds = [f.split(".") for f in finds]
-        load_scope_chain = scope.split(".")
-        finds = [
-            f
-            for f in finds
-            if f[: len(load_scope_chain)] == load_scope_chain[: len(f)]
-            and len(f) <= len(load_scope_chain)
-        ]
+        if self.parent:
+            return self.parent.lookup(symbol_name)
 
-        longest_chain = max(finds, key=len)
-        if len(longest_chain) == 1:
-            return
+        return None
 
-        if len(longest_chain) < len(load_scope_chain):
-            longest_chain = ".".join(longest_chain)
-            self.table[longest_chain][name]["load_type"] = "DEREF"
+    def declare(
+        self,
+        symbol_name: str,
+        symbol_type: Literal["Var", "Function"],
+        load_type: Literal["GLOBAL", "NAME", "FAST", "DREF"] = "FAST",
+    ):
+        if symbol_name in self._context_symbols:
+            raise Exception(f"Symbol {symbol_name} already declared!")
 
-    def get_closest(self, scope, name) -> Dict[str, str]:
-        if scope != "module" and scope.endswith(name):
-            return {"load_type": "GLOBAL"}
-        finds = self.lookup(name)
-        if len(finds) == 0:
-            raise Exception(f"Symbol {name} not found!")
+        symbol = Symbol(symbol_name, symbol_type, load_type, self.context_name)
+        if self.context_name == "<rinha:module>":
+            symbol.load_type = "NAME"
 
-        finds = [f.split(".") for f in finds]
-        load_scope_chain = scope.split(".")
-        finds = [
-            f
-            for f in finds
-            if f[: len(load_scope_chain)] == load_scope_chain[: len(f)]
-            and len(f) <= len(load_scope_chain)
-        ]
+        self._context_symbols[symbol_name] = symbol
+        if symbol_type == "Function":
+            self._tables[symbol_name] = SymbolTable(symbol_name, self)
 
-        longest_chain = max(finds, key=len)
-        if len(longest_chain) == 1:
-            return self.table[longest_chain[0]][name]
-
-        return self.table[".".join(longest_chain)][name]
+    def reference(self, symbol_name: str):
+        symbol = self.lookup(symbol_name)
+        if symbol:
+            symbol.referenced_count += 1
+            if symbol.context_name != self.context_name:
+                symbol.load_type = "DEREF"
 
 
-def to_symbol_table(term, table: SymbolTable, scope: str = "module"):
+def print_symbol_table(table: SymbolTable, depth: int = 0):
+    prefix = "│   " * (depth - 1) + "├─ " if depth > 0 else ""
+    for symbol in table._context_symbols.values():
+        print(f"{prefix} {symbol.symbol_type} {symbol.name} {symbol.load_type}")
+        if symbol.symbol_type == "Function":
+            print_symbol_table(table.get_context(symbol.name), depth + 1)
+
+
+def create_symbol_table(term, table: SymbolTable = None):
     if isinstance(term, File):
-        to_symbol_table(term.expression, table, "module")
+        table = SymbolTable()
+        create_symbol_table(term.expression, table)
 
     elif isinstance(term, Let) and not isinstance(term.value, Function):
-        table.insert(scope, term.name.text)
-        to_symbol_table(term.next_term, table)
+        table.declare(term.name.text, "Var")
+        create_symbol_table(term.next_term, table)
 
     elif isinstance(term, Let) and isinstance(term.value, Function):
-        table.insert(scope, term.name.text)
-        function_scope = f"{scope}.{term.name.text}"
+        table.declare(term.name.text, "Function")
+        function_context = table.get_context(term.name.text)
         for param in term.value.parameters:
-            table.insert(function_scope, param.text, "FAST")
-        to_symbol_table(term.value.value, table, function_scope)
-        to_symbol_table(term.next_term, table, scope)
+            function_context.declare(param.text, "Var", "FAST")
+        create_symbol_table(term.value.value, function_context)
+        create_symbol_table(term.next_term, table)
 
     elif isinstance(term, Var):
-        table.insert_load(scope, term.text)
+        table.reference(term.text)
 
     elif isinstance(term, Call):
-        to_symbol_table(term.callee, table, scope)
+        create_symbol_table(term.callee, table)
+        for arg in term.arguments:
+            create_symbol_table(arg, table)
 
     elif isinstance(term, Binary):
-        to_symbol_table(term.lhs, table, scope)
-        to_symbol_table(term.rhs, table, scope)
+        create_symbol_table(term.lhs, table)
+        create_symbol_table(term.rhs, table)
 
     return table
+
+
+if __name__ == "__main__":
+    import json
+    with open(".drafts/rinha/sum/sum.json") as f:
+        json_ast = json.load(f)
+        ast = parse_json_to_object(json_ast)
+    symbol_table = create_symbol_table(ast)
+    print_symbol_table(symbol_table)

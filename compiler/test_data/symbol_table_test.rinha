@@ -1,0 +1,13 @@
+let add = fn (a, b) => {
+    a + b
+};
+
+let minus = fn (a, b) => {
+    let useless_fn = fn() => {
+        a
+    };
+
+    useless_fn() - b
+};
+
+add(10, 10)
