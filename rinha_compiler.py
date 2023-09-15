@@ -196,7 +196,6 @@ if __name__ == "__main__":
     symbol_table = to_symbol_table(data, SymbolTable(), "module")
     compiler = Compiler(symbol_table)
     bytecode = compiler.to_bytecode(data, Bytecode())
-    exec(bytecode.to_code())
-    # Save bytecode to file (.pyc)
+    from compiler.utils import code_to_pyc_bytecode
     with open("./first_test/first_test.pyc", "wb") as f:
-        f.write(bytecode.to_code())
+        f.write(code_to_pyc_bytecode(bytecode.to_code()))
