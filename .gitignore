@@ -3,3 +3,6 @@
 
 
 **/*.pyc
+**/*.rinhac
+
+.drafts
