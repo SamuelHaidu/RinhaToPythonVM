@@ -1,7 +1,6 @@
 from enum import Enum
 from dataclasses import dataclass
 from abc import ABC
-from typing import Any, Dict
 
 
 class Term(ABC):
