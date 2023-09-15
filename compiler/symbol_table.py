@@ -1,5 +1,12 @@
 from typing import Dict, List
-
+from compiler.ast import (
+    Var,
+    Function,
+    Call,
+    Let,
+    Binary,
+    File,
+)
 
 class SymbolTable:
     def __init__(self):
@@ -65,3 +72,32 @@ class SymbolTable:
             return self.table[longest_chain[0]][name]
 
         return self.table[".".join(longest_chain)][name]
+
+
+def to_symbol_table(term, table: SymbolTable, scope: str = "module"):
+    if isinstance(term, File):
+        to_symbol_table(term.expression, table, "module")
+
+    elif isinstance(term, Let) and not isinstance(term.value, Function):
+        table.insert(scope, term.name.text)
+        to_symbol_table(term.next_term, table)
+
+    elif isinstance(term, Let) and isinstance(term.value, Function):
+        table.insert(scope, term.name.text)
+        function_scope = f"{scope}.{term.name.text}"
+        for param in term.value.parameters:
+            table.insert(function_scope, param.text, "FAST")
+        to_symbol_table(term.value.value, table, function_scope)
+        to_symbol_table(term.next_term, table, scope)
+
+    elif isinstance(term, Var):
+        table.insert_load(scope, term.text)
+
+    elif isinstance(term, Call):
+        to_symbol_table(term.callee, table, scope)
+
+    elif isinstance(term, Binary):
+        to_symbol_table(term.lhs, table, scope)
+        to_symbol_table(term.rhs, table, scope)
+
+    return table
