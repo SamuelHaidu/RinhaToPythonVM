@@ -21,34 +21,34 @@ def print_tree(node, depth=0):
 
     def format_node(node):
         if isinstance(node, File):
-            return f"[File {node.name}]"
+            return f"[File {node.name}] ({node.location.line_number})"
         elif isinstance(node, Var):
-            return f"Var {node.text}"
+            return f"Var {node.text} ({node.location.line_number})"
         elif isinstance(node, Function):
             params = " ".join(param.text for param in node.parameters)
-            return f"Function {params}"
+            return f"Function {params} ({node.location.line_number})"
         elif isinstance(node, Call):
             return "Call"
         elif isinstance(node, Let):
-            return f"Let {node.name.text}"
+            return f"Let {node.name.text} ({node.location.line_number})"
         elif isinstance(node, Str):
             return f'String "{node.value}"'
         elif isinstance(node, Int):
-            return f"Int {node.value}"
+            return f"Int {node.value} ({node.location.line_number})"
         elif isinstance(node, Binary):
-            return f"Binary Operator {node.op.value}"
+            return f"Binary Operator {node.op.value} ({node.location.line_number})"
         elif isinstance(node, Bool):
-            return f"Bool {node.value}"
+            return f"Bool {node.value} ({node.location.line_number})"
         elif isinstance(node, If):
-            return "If"
+            return f"If ({node.location.line_number})"
         elif isinstance(node, Tuple):
-            return "Tuple"
+            return f"Tuple ({node.location.line_number})"
         elif isinstance(node, First):
-            return "First"
+            return f"First ({node.location.line_number})"
         elif isinstance(node, Second):
-            return "Second"
+            return f"Second ({node.location.line_number})"
         elif isinstance(node, Print):
-            return "Print"
+            return f"Print ({node.location.line_number})"
 
     print(f"{prefix}{format_node(node)}")
 
