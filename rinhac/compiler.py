@@ -1,8 +1,4 @@
-from typing import List
 from bytecode import Bytecode, Compare, Instr, CellVar, FreeVar, Label
-from rinhac.ast.json_parser import parse_json_to_object
-import json
-from typing import Dict
 from rinhac.ast import (
     BinaryOp,
     Var,
@@ -21,7 +17,7 @@ from rinhac.ast import (
     File,
 )
 from rinhac import SymbolTable
-from rinhac.symbol_table import create_symbol_table, SymbolTable
+from rinhac.symbol_table import SymbolTable
 
 
 class Compiler:
@@ -41,18 +37,14 @@ class Compiler:
         BinaryOp.Or: Instr("BINARY_OR"),
     }
 
-    def __init__(self):
-        pass
-
     def to_bytecode(self, term, bytecode: Bytecode, symbol_table: SymbolTable) -> Bytecode:
         if isinstance(term, File):
-            self.filename = term.name
             bytecode = self.to_bytecode(term.expression, bytecode, symbol_table)
             bytecode.extend(
                 [Instr("POP_TOP"), Instr("LOAD_CONST", None), Instr("RETURN_VALUE")]
             )
             bytecode.name = "<rinha:module>"
-            bytecode.filename = self.filename
+            bytecode.filename = term.location.filename
             bytecode.first_lineno = term.location.start + 1
             return bytecode
         elif isinstance(term, Let) and not isinstance(term.value, Function):
@@ -89,7 +81,7 @@ class Compiler:
             function_bytecode.append(Instr("RETURN_VALUE"))
 
             function_bytecode.name = function_name
-            function_bytecode.filename = self.filename
+            function_bytecode.filename = term.location.filename
             function_bytecode.first_lineno = term.location.start + 1
 
             bytecode.append(Instr("LOAD_CONST", function_bytecode.to_code()))

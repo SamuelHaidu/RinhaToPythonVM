@@ -78,10 +78,3 @@ def print_tree(node, depth=0):
         print_tree(node.second, depth + 1)
     elif isinstance(node, First) or isinstance(node, Second) or isinstance(node, Print):
         print_tree(node.value, depth + 1)
-
-
-if __name__ == "__main__":
-    with open("./test_if_else/test_if_else.json", "r") as f:
-        tree_json = json.load(f)
-        tree = parse_json_to_object(tree_json)
-        print_tree(tree)

@@ -8,7 +8,6 @@ from rinhac.ast import (
     Binary,
     File,
 )
-from rinhac.ast.json_parser import parse_json_to_object
 
 
 @dataclass(slots=True)
@@ -107,12 +106,3 @@ def create_symbol_table(term, table: SymbolTable = None):
         create_symbol_table(term.rhs, table)
 
     return table
-
-
-if __name__ == "__main__":
-    import json
-    with open(".drafts/rinha/sum/sum.json") as f:
-        json_ast = json.load(f)
-        ast = parse_json_to_object(json_ast)
-    symbol_table = create_symbol_table(ast)
-    print_symbol_table(symbol_table)
