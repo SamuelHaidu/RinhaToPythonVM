@@ -4,6 +4,7 @@ import unittest
 from rinhac.ast.json_parser import parse_json_to_object
 
 from rinhac.symbol_table import create_symbol_table
+from rinhac.utils.index_line_mapper import IndexLineMapper
 
 _current_dir = os.path.dirname(os.path.abspath(__file__))
 EXAMPLE_AST_JSON_PATH = os.path.join(_current_dir, "test_data", "symbol_table_test.json")
@@ -13,6 +14,7 @@ class TestSymbolTable(unittest.TestCase):
     def test_symbol_table(self):
         with open(EXAMPLE_AST_JSON_PATH) as f:
             json_ast = json.load(f)
+        index_line_mapper = IndexLineMapper(EXAMPLE_AST_JSON_PATH)
         ast = parse_json_to_object(json_ast)
         symbol_table = create_symbol_table(ast)
 

@@ -9,6 +9,7 @@ class Term(ABC):
 
 @dataclass(slots=True)
 class Location:
+    line_number: int
     start: int
     end: int
     filename: str

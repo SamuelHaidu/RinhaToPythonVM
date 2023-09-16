@@ -6,6 +6,7 @@ from rinhac.ast.ast_objects import File
 from rinhac.ast.json_parser import parse_json_to_object
 from rinhac.compiler import Compiler
 from rinhac.symbol_table import SymbolTable, create_symbol_table, print_symbol_table
+from rinhac.utils.index_line_mapper import IndexLineMapper
 from rinhac.utils.print_ast import print_tree
 from rinhac.utils.pyc_converter import code_to_pyc_bytecode
 from bytecode import Bytecode
@@ -15,7 +16,8 @@ def _get_ast(ast_file_path) -> File:
     try:
         with open(ast_file_path, "r") as f:
             json_ast = json.load(f)
-            ast = parse_json_to_object(json_ast)
+            index_line_mapper = IndexLineMapper(ast_file_path)
+            ast = parse_json_to_object(json_ast, index_line_mapper)
             return ast
     except FileNotFoundError:
         print("File not found:", ast_file_path)

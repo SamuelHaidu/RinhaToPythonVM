@@ -7,6 +7,7 @@ from bytecode import Bytecode
 from rinhac.ast.json_parser import parse_json_to_object
 from rinhac.symbol_table import create_symbol_table
 from rinhac import Compiler
+from rinhac.utils.index_line_mapper import IndexLineMapper
 
 _current_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -37,7 +38,8 @@ class TestCompiler(unittest.TestCase):
     def _build(self, json_path) -> CodeType:
         with open(json_path) as f:
             json_ast = json.load(f)
-        ast = parse_json_to_object(json_ast)
+        index_line_mapper = IndexLineMapper(json_path)
+        ast = parse_json_to_object(json_ast, index_line_mapper)
         symbol_table = create_symbol_table(ast)
         compiler = Compiler()
         return compiler.to_bytecode(ast, Bytecode(), symbol_table).to_code()
