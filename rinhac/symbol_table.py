@@ -64,8 +64,13 @@ class SymbolTable:
         symbol = self.lookup(symbol_name)
         if symbol:
             symbol.referenced_count += 1
-            if symbol.context_name != self.context_name:
-                symbol.load_type = "DEREF"
+            if symbol.context_name == self.context_name:
+                return
+            if symbol.context_name == "<rinha:module>":
+                symbol.load_type = "NAME"
+                return
+                
+            symbol.load_type = "DEREF"
 
 
 def print_symbol_table(table: SymbolTable, depth: int = 0):
