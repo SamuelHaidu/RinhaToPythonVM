@@ -1,0 +1,21 @@
+let module_var = "module_var";
+
+let module_fn = fn(local_var) => {
+    local_var + module_var
+};
+
+let inner_outer_fn = fn() => {
+    let fn_var = "fn_var_outer"
+    let inner_fun = fn() => {
+        let fn_var_inner = "fn_var_inner"
+        fn_var + fn_var_inner
+    }
+};
+
+let shadowing_fn = fn() => {
+    let shadowed = "outer"
+    {
+        let shadowed = "inner"
+        shadowed
+    }
+};
