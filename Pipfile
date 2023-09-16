@@ -4,8 +4,6 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-llvmlite = "*"
-pwnypack = "*"
 bytecode = "*"
 
 [dev-packages]
