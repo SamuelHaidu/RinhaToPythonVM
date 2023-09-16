@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from typing import Dict, Literal, Optional
-from compiler.ast import (
+from rinhac.ast import (
     Var,
     Function,
     Call,
@@ -8,7 +8,7 @@ from compiler.ast import (
     Binary,
     File,
 )
-from compiler.ast.json_parser import parse_json_to_object
+from rinhac.ast.json_parser import parse_json_to_object
 
 
 @dataclass(slots=True)

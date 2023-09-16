@@ -1,5 +1,5 @@
 from typing import Any, Dict
-from compiler.ast.ast_objects import (
+from rinhac.ast.ast_objects import (
     BinaryOp,
     Parameter,
     Term,

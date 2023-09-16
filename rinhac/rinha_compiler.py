@@ -1,9 +1,9 @@
 from typing import List
 from bytecode import Bytecode, Compare, Instr, CellVar, FreeVar, Label
-from compiler.ast.json_parser import parse_json_to_object
+from rinhac.ast.json_parser import parse_json_to_object
 import json
 from typing import Dict
-from compiler.ast import (
+from rinhac.ast import (
     BinaryOp,
     Var,
     Function,
@@ -20,8 +20,8 @@ from compiler.ast import (
     Print,
     File,
 )
-from compiler import SymbolTable
-from compiler.symbol_table import create_symbol_table, SymbolTable
+from rinhac import SymbolTable
+from rinhac.symbol_table import create_symbol_table, SymbolTable
 
 
 class Compiler:

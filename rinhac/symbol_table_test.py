@@ -1,9 +1,9 @@
 import json
 import os
 import unittest
-from compiler.ast.json_parser import parse_json_to_object
+from rinhac.ast.json_parser import parse_json_to_object
 
-from compiler.symbol_table import create_symbol_table
+from rinhac.symbol_table import create_symbol_table
 
 _current_dir = os.path.dirname(os.path.abspath(__file__))
 EXAMPLE_AST_JSON_PATH = os.path.join(_current_dir, "test_data", "symbol_table_test.json")
