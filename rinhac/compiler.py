@@ -25,7 +25,7 @@ class Compiler:
         BinaryOp.Add: Instr("BINARY_ADD"),
         BinaryOp.Sub: Instr("BINARY_SUBTRACT"),
         BinaryOp.Mul: Instr("BINARY_MULTIPLY"),
-        BinaryOp.Div: Instr("BINARY_TRUE_DIVIDE"),
+        BinaryOp.Div: Instr("BINARY_FLOOR_DIVIDE"),
         BinaryOp.Rem: Instr("BINARY_MODULO"),
         BinaryOp.Eq: Instr("COMPARE_OP", Compare.EQ),
         BinaryOp.Neq: Instr("COMPARE_OP", Compare.NE),
@@ -36,6 +36,11 @@ class Compiler:
         BinaryOp.And: Instr("BINARY_AND"),
         BinaryOp.Or: Instr("BINARY_OR"),
     }
+
+    @staticmethod
+    def _extend_vars(origin: Bytecode, new: Bytecode):
+        origin.cellvars = list(set(origin.cellvars).union(set(new.cellvars)))
+        origin.freevars = list(set(origin.freevars).union(set(new.freevars)))
 
     def to_bytecode(self, term, bytecode: Bytecode, symbol_table: SymbolTable) -> Bytecode:
         if isinstance(term, File):
@@ -55,6 +60,9 @@ class Compiler:
                 bytecode.append(Instr("STORE_NAME", variable_name))
             elif symbol.load_type == "DEREF":
                 bytecode.extend(self.to_bytecode(term.value, Bytecode(), symbol_table))
+                bytecode.cellvars.append(
+                    variable_name
+                ) if variable_name not in bytecode.cellvars else None
                 bytecode.append(Instr("STORE_DEREF", CellVar(variable_name)))
             elif symbol.load_type == "FAST":
                 bytecode.extend(self.to_bytecode(term.value, Bytecode(), symbol_table))
@@ -140,19 +148,26 @@ class Compiler:
 
         elif isinstance(term, Binary):
             opcode = self.binary_map[term.op]
-            bytecode.extend(self.to_bytecode(term.lhs, Bytecode(), symbol_table))
-            bytecode.extend(self.to_bytecode(term.rhs, Bytecode(), symbol_table))
+            left_code = self.to_bytecode(term.lhs, Bytecode(), symbol_table)
+            self._extend_vars(bytecode, left_code)
+            right_code = self.to_bytecode(term.rhs, Bytecode(), symbol_table)
+            self._extend_vars(bytecode, right_code)
+            bytecode.extend(left_code)
+            bytecode.extend(right_code)
             bytecode.append(opcode)
 
         elif isinstance(term, Print):
             bytecode.append(Instr("LOAD_GLOBAL", "print"))
-            bytecode.extend(self.to_bytecode(term.value, Bytecode(), symbol_table))
+            value_bytecode = self.to_bytecode(term.value, Bytecode(), symbol_table)
+            bytecode.extend(value_bytecode)
             bytecode.append(Instr("CALL_FUNCTION", 1))
 
         elif isinstance(term, If):
             condition_bytecode = self.to_bytecode(term.condition, Bytecode(), symbol_table)
             true_bytecode = self.to_bytecode(term.then, Bytecode(), symbol_table)
+            self._extend_vars(bytecode, true_bytecode)
             false_bytecode = self.to_bytecode(term.otherwise, Bytecode(), symbol_table)
+            self._extend_vars(bytecode, false_bytecode)
             bytecode.extend(condition_bytecode)
             else_label = Label()
             end_if_label = Label()
@@ -164,17 +179,25 @@ class Compiler:
             bytecode.append(end_if_label)
 
         elif isinstance(term, Tuple):
-            bytecode.extend(self.to_bytecode(term.first, Bytecode(), symbol_table))
-            bytecode.extend(self.to_bytecode(term.second, Bytecode(), symbol_table))
+            first_bytecode = self.to_bytecode(term.first, Bytecode(), symbol_table)
+            self._extend_vars(bytecode, first_bytecode)
+            second_bytecode = self.to_bytecode(term.second, Bytecode(), symbol_table)
+            self._extend_vars(bytecode, second_bytecode)
+            bytecode.extend(first_bytecode)
+            bytecode.extend(second_bytecode)
             bytecode.append(Instr("BUILD_TUPLE", 2))
 
         elif isinstance(term, First):
-            bytecode.extend(self.to_bytecode(term.value, Bytecode(), symbol_table))
+            value_bytecode = self.to_bytecode(term.value, Bytecode(), symbol_table)
+            self._extend_vars(bytecode, value_bytecode)
+            bytecode.extend(value_bytecode)
             bytecode.append(Instr("LOAD_CONST", 0))
             bytecode.append(Instr("BINARY_SUBSCR"))
 
         elif isinstance(term, Second):
-            bytecode.extend(self.to_bytecode(term.value, Bytecode(), symbol_table))
+            value_bytecode = self.to_bytecode(term.value, Bytecode(), symbol_table)
+            self._extend_vars(bytecode, value_bytecode)
+            bytecode.extend(value_bytecode)
             bytecode.append(Instr("LOAD_CONST", 1))
             bytecode.append(Instr("BINARY_SUBSCR"))
 
