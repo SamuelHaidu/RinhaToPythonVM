@@ -15,7 +15,7 @@ class TestSymbolTable(unittest.TestCase):
         with open(EXAMPLE_AST_JSON_PATH) as f:
             json_ast = json.load(f)
         index_line_mapper = IndexLineMapper(EXAMPLE_AST_JSON_PATH)
-        ast = parse_json_to_object(json_ast)
+        ast = parse_json_to_object(json_ast, index_line_mapper)
         symbol_table = create_symbol_table(ast)
 
         """ Tree structure of symbol table
