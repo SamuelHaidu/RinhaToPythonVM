@@ -1,60 +1,60 @@
 // Operators
-let add_example = fn(a, b) => {
+let add_fn = fn(a, b) => {
     a + b
 };
 
 // Subtração:
-let sub_example = fn(a, b) => {
+let sub_fn = fn(a, b) => {
     a - b
 };
 
 // Multiplicação:
-let mul_example = fn(a, b) => {
+let mul_fn = fn(a, b) => {
     a * b
 };
 
 // Divisão:
-let div_example = fn(a, b) => {
+let div_fn = fn(a, b) => {
     a / b
 };
 
 // Resto da divisão:
-let rem_example = fn(a, b) => {
+let rem_fn = fn(a, b) => {
     a % b
 };
 
 // Igualdade:
-let eq_example = fn(a, b) => {
+let eq_fn = fn(a, b) => {
     a == b
 };
 
 // Diferente:
-let neq_example = fn(a, b) => {
+let neq_fn = fn(a, b) => {
     a != b
 };
 
 // Menor:
-let lt_example = fn(a, b) => {
+let lt_fn = fn(a, b) => {
     a < b
 };
 
-let gt_example = fn(a, b) => {
+let gt_fn = fn(a, b) => {
     a > b
 };
 
-let lte_example = fn(a, b) => {
+let lte_fn = fn(a, b) => {
     a <= b
 };
 
-let gte_example = fn(a, b) => {
+let gte_fn = fn(a, b) => {
     a >= b
 };
 
-let and_example = fn(a, b) => {
+let and_fn = fn(a, b) => {
     a && b
 };
 
-let or_example = fn(a, b) => {
+let or_fn = fn(a, b) => {
     a || b
 };
 
