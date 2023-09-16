@@ -15,3 +15,50 @@ O projeto é dividido em várias partes essenciais, cada uma com sua função es
 ## Detalhes da implementação
 
 Primeiro é feito o parse do json e convertido em objetos de python, mais leves e faceis de trabalhar. Depois é construido a tabela de simbolos e onde se checa se as variaveis existem quando chamadas. Depois é feito a compilação para bytecode de python a partir da arvore sintatica abstrata. Com o bytecode salvamos em um arquivo .pyc e executamos com o python.
+
+## Como usar o CLI
+
+O Rinha Compiler (CLI) é uma ferramenta que permite compilar a linguagem exótica "Rinha" em Bytecode Python VM. Abaixo estão as instruções para utilizar o CLI:
+
+### Pré-requisitos
+
+Certifique-se de ter o Python 3.x instalado em seu sistema.
+
+### Instalação
+
+Não é necessário instalar o Rinha Compiler, pois é um script Python autônomo.
+
+### Uso
+
+1. Clone este repositório e navegue até o diretório em que o script `rinha_compiler.py` está localizado.
+
+2. Abra um terminal no diretório mencionado.
+
+3. Para compilar um arquivo AST Rinha em bytecode Python (`.pyc`), execute o seguinte comando:
+
+    ```bash
+    python -m rinhac [-b] <caminho-para-arquivo-ast> [-o <caminho-de-saida.pyc>]
+    ```
+    `[...]` = opcional
+
+    Substitua `<caminho-para-arquivo-ast>` pelo caminho para o arquivo AST Rinha que deseja compilar.
+
+    Se desejar, você pode especificar um caminho de saída personalizado para o arquivo `.pyc` usando a opção `-o`.
+
+4. Para imprimir a árvore sintática abstrata (AST) do arquivo Rinha, execute o seguinte comando:
+
+    ```bash
+    python -m rinhac -a <caminho-para-arquivo-ast>
+    ```
+
+    Substitua `<caminho-para-arquivo-ast>` pelo caminho para o arquivo AST Rinha que deseja imprimir.
+
+5. Para imprimir a tabela de símbolos do arquivo Rinha, execute o seguinte comando:
+
+    ```bash
+    python -m rinhac -s <caminho-para-arquivo-ast>
+    ```
+
+    Substitua `<caminho-para-arquivo-ast>` pelo caminho para o arquivo AST Rinha que deseja usar para imprimir a tabela de símbolos.
+
+6. Sinta-se à vontade para explorar outras opções e funcionalidades executando `python -m rinhac --help`.
