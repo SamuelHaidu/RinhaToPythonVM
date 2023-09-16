@@ -1,4 +1,4 @@
-let if_else_fn = fn(a) => {
+let if_else_fn = fn (a) => {
   let b = 20;
   if (a < b){
     b
@@ -6,3 +6,5 @@ let if_else_fn = fn(a) => {
     a
   }
 };
+
+print("if_else_fn.rinha")

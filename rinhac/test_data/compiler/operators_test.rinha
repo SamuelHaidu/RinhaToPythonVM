@@ -1,59 +1,61 @@
-// Soma:
+// Operators
 let add_example = fn(a, b) => {
     a + b
-}
+};
 
 // Subtração:
 let sub_example = fn(a, b) => {
     a - b
-}
+};
 
 // Multiplicação:
 let mul_example = fn(a, b) => {
     a * b
-}
+};
 
 // Divisão:
 let div_example = fn(a, b) => {
     a / b
-}
+};
 
 // Resto da divisão:
 let rem_example = fn(a, b) => {
     a % b
-}
+};
 
 // Igualdade:
 let eq_example = fn(a, b) => {
     a == b
-}
+};
 
 // Diferente:
 let neq_example = fn(a, b) => {
     a != b
-}
+};
 
 // Menor:
 let lt_example = fn(a, b) => {
     a < b
-}
+};
 
 let gt_example = fn(a, b) => {
     a > b
-}
+};
 
 let lte_example = fn(a, b) => {
     a <= b
-}
+};
 
 let gte_example = fn(a, b) => {
     a >= b
-}
+};
 
 let and_example = fn(a, b) => {
     a && b
-}
+};
 
 let or_example = fn(a, b) => {
     a || b
-}
+};
+
+print("operators_test.rinha")

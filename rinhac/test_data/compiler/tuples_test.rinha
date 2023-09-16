@@ -1,9 +1,11 @@
-let tuple_var = (1, 2)
+let tuple_var = (1, 2);
 
-let get_first_fn = fn(tuple) {
+let get_first_fn = fn(tuple) => {
   first(tuple)
 };
 
-let get_second_fn = fn(tuple) {
+let get_second_fn = fn(tuple) => {
   second(tuple)
 };
+
+print("tuples_test.rinha")

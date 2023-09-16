@@ -5,17 +5,21 @@ let module_fn = fn(local_var) => {
 };
 
 let inner_outer_fn = fn() => {
-    let fn_var = "fn_var_outer"
+    let fn_var = "fn_var_outer";
     let inner_fun = fn() => {
-        let fn_var_inner = "fn_var_inner"
+        let fn_var_inner = "fn_var_inner";
         fn_var + fn_var_inner
-    }
+    };
+    inner_fun()
 };
 
 let shadowing_fn = fn() => {
-    let shadowed = "outer"
-    {
-        let shadowed = "inner"
+    let shadowed = "outer";
+    let shadow = fn() => {
+        let shadowed = "inner";
         shadowed
-    }
+    };
+    shadowed + shadow()
 };
+
+print("variables_test.rinha")
