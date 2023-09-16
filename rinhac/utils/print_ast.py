@@ -1,5 +1,3 @@
-import json
-from rinhac.ast.json_parser import parse_json_to_object
 from rinhac.ast.ast_objects import (
     Var,
     Function,
