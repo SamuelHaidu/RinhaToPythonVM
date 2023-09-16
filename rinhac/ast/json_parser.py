@@ -67,8 +67,8 @@ def parse_json_to_object(
             return Call(
                 callee=parse_json_to_object(json_data["callee"], index_line_mapper),
                 arguments=[
-                    parse_json_to_object(argument)
-                    for a, index_line_mapperrgument in json_data["arguments"]
+                    parse_json_to_object(argument, index_line_mapper)
+                    for argument in json_data["arguments"]
                 ],
                 location=location,
             )
