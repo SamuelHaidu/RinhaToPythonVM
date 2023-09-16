@@ -1,0 +1,137 @@
+{
+    "name": "./rinhac/test_data/compiler/if_else_test.rinha",
+    "expression": {
+        "kind": "Let",
+        "name": {
+            "text": "if_else_fn",
+            "location": {
+                "start": 4,
+                "end": 14,
+                "filename": "./rinhac/test_data/compiler/if_else_test.rinha"
+            }
+        },
+        "value": {
+            "kind": "Function",
+            "parameters": [
+                {
+                    "text": "a",
+                    "location": {
+                        "start": 21,
+                        "end": 22,
+                        "filename": "./rinhac/test_data/compiler/if_else_test.rinha"
+                    }
+                }
+            ],
+            "value": {
+                "kind": "Let",
+                "name": {
+                    "text": "b",
+                    "location": {
+                        "start": 35,
+                        "end": 36,
+                        "filename": "./rinhac/test_data/compiler/if_else_test.rinha"
+                    }
+                },
+                "value": {
+                    "kind": "Int",
+                    "value": 20,
+                    "location": {
+                        "start": 39,
+                        "end": 41,
+                        "filename": "./rinhac/test_data/compiler/if_else_test.rinha"
+                    }
+                },
+                "next": {
+                    "kind": "If",
+                    "condition": {
+                        "kind": "Binary",
+                        "lhs": {
+                            "kind": "Var",
+                            "text": "a",
+                            "location": {
+                                "start": 49,
+                                "end": 50,
+                                "filename": "./rinhac/test_data/compiler/if_else_test.rinha"
+                            }
+                        },
+                        "op": "Lt",
+                        "rhs": {
+                            "kind": "Var",
+                            "text": "b",
+                            "location": {
+                                "start": 53,
+                                "end": 54,
+                                "filename": "./rinhac/test_data/compiler/if_else_test.rinha"
+                            }
+                        },
+                        "location": {
+                            "start": 49,
+                            "end": 54,
+                            "filename": "./rinhac/test_data/compiler/if_else_test.rinha"
+                        }
+                    },
+                    "then": {
+                        "kind": "Var",
+                        "text": "b",
+                        "location": {
+                            "start": 61,
+                            "end": 62,
+                            "filename": "./rinhac/test_data/compiler/if_else_test.rinha"
+                        }
+                    },
+                    "otherwise": {
+                        "kind": "Var",
+                        "text": "a",
+                        "location": {
+                            "start": 78,
+                            "end": 79,
+                            "filename": "./rinhac/test_data/compiler/if_else_test.rinha"
+                        }
+                    },
+                    "location": {
+                        "start": 45,
+                        "end": 83,
+                        "filename": "./rinhac/test_data/compiler/if_else_test.rinha"
+                    }
+                },
+                "location": {
+                    "start": 31,
+                    "end": 83,
+                    "filename": "./rinhac/test_data/compiler/if_else_test.rinha"
+                }
+            },
+            "location": {
+                "start": 17,
+                "end": 85,
+                "filename": "./rinhac/test_data/compiler/if_else_test.rinha"
+            }
+        },
+        "next": {
+            "kind": "Print",
+            "value": {
+                "kind": "Str",
+                "value": "if_else_fn.rinha",
+                "location": {
+                    "start": 94,
+                    "end": 112,
+                    "filename": "./rinhac/test_data/compiler/if_else_test.rinha"
+                }
+            },
+            "location": {
+                "start": 88,
+                "end": 113,
+                "filename": "./rinhac/test_data/compiler/if_else_test.rinha"
+            }
+        },
+        "location": {
+            "start": 0,
+            "end": 113,
+            "filename": "./rinhac/test_data/compiler/if_else_test.rinha"
+        }
+    },
+    "location": {
+        "start": 0,
+        "end": 113,
+        "filename": "./rinhac/test_data/compiler/if_else_test.rinha"
+    }
+}

@@ -1,0 +1,401 @@
+{
+    "name": "./rinhac/test_data/compiler/variables_test.rinha",
+    "expression": {
+        "kind": "Let",
+        "name": {
+            "text": "module_var",
+            "location": {
+                "start": 4,
+                "end": 14,
+                "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+            }
+        },
+        "value": {
+            "kind": "Str",
+            "value": "module_var",
+            "location": {
+                "start": 17,
+                "end": 29,
+                "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+            }
+        },
+        "next": {
+            "kind": "Let",
+            "name": {
+                "text": "module_fn",
+                "location": {
+                    "start": 36,
+                    "end": 45,
+                    "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                }
+            },
+            "value": {
+                "kind": "Function",
+                "parameters": [
+                    {
+                        "text": "local_var",
+                        "location": {
+                            "start": 51,
+                            "end": 60,
+                            "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                        }
+                    }
+                ],
+                "value": {
+                    "kind": "Binary",
+                    "lhs": {
+                        "kind": "Var",
+                        "text": "local_var",
+                        "location": {
+                            "start": 71,
+                            "end": 80,
+                            "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                        }
+                    },
+                    "op": "Add",
+                    "rhs": {
+                        "kind": "Var",
+                        "text": "module_var",
+                        "location": {
+                            "start": 83,
+                            "end": 93,
+                            "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                        }
+                    },
+                    "location": {
+                        "start": 71,
+                        "end": 93,
+                        "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                    }
+                },
+                "location": {
+                    "start": 48,
+                    "end": 95,
+                    "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                }
+            },
+            "next": {
+                "kind": "Let",
+                "name": {
+                    "text": "inner_outer_fn",
+                    "location": {
+                        "start": 102,
+                        "end": 116,
+                        "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                    }
+                },
+                "value": {
+                    "kind": "Function",
+                    "parameters": [],
+                    "value": {
+                        "kind": "Let",
+                        "name": {
+                            "text": "fn_var",
+                            "location": {
+                                "start": 137,
+                                "end": 143,
+                                "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                            }
+                        },
+                        "value": {
+                            "kind": "Str",
+                            "value": "fn_var_outer",
+                            "location": {
+                                "start": 146,
+                                "end": 160,
+                                "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                            }
+                        },
+                        "next": {
+                            "kind": "Let",
+                            "name": {
+                                "text": "inner_fun",
+                                "location": {
+                                    "start": 170,
+                                    "end": 179,
+                                    "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                                }
+                            },
+                            "value": {
+                                "kind": "Function",
+                                "parameters": [],
+                                "value": {
+                                    "kind": "Let",
+                                    "name": {
+                                        "text": "fn_var_inner",
+                                        "location": {
+                                            "start": 204,
+                                            "end": 216,
+                                            "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                                        }
+                                    },
+                                    "value": {
+                                        "kind": "Str",
+                                        "value": "fn_var_inner",
+                                        "location": {
+                                            "start": 219,
+                                            "end": 233,
+                                            "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                                        }
+                                    },
+                                    "next": {
+                                        "kind": "Binary",
+                                        "lhs": {
+                                            "kind": "Var",
+                                            "text": "fn_var",
+                                            "location": {
+                                                "start": 243,
+                                                "end": 249,
+                                                "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                                            }
+                                        },
+                                        "op": "Add",
+                                        "rhs": {
+                                            "kind": "Var",
+                                            "text": "fn_var_inner",
+                                            "location": {
+                                                "start": 252,
+                                                "end": 264,
+                                                "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                                            }
+                                        },
+                                        "location": {
+                                            "start": 243,
+                                            "end": 264,
+                                            "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                                        }
+                                    },
+                                    "location": {
+                                        "start": 200,
+                                        "end": 264,
+                                        "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                                    }
+                                },
+                                "location": {
+                                    "start": 182,
+                                    "end": 270,
+                                    "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                                }
+                            },
+                            "next": {
+                                "kind": "Call",
+                                "callee": {
+                                    "kind": "Var",
+                                    "text": "inner_fun",
+                                    "location": {
+                                        "start": 276,
+                                        "end": 285,
+                                        "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                                    }
+                                },
+                                "arguments": [],
+                                "location": {
+                                    "start": 276,
+                                    "end": 287,
+                                    "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                                }
+                            },
+                            "location": {
+                                "start": 166,
+                                "end": 287,
+                                "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                            }
+                        },
+                        "location": {
+                            "start": 133,
+                            "end": 287,
+                            "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                        }
+                    },
+                    "location": {
+                        "start": 119,
+                        "end": 289,
+                        "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                    }
+                },
+                "next": {
+                    "kind": "Let",
+                    "name": {
+                        "text": "shadowing_fn",
+                        "location": {
+                            "start": 296,
+                            "end": 308,
+                            "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                        }
+                    },
+                    "value": {
+                        "kind": "Function",
+                        "parameters": [],
+                        "value": {
+                            "kind": "Let",
+                            "name": {
+                                "text": "shadowed",
+                                "location": {
+                                    "start": 329,
+                                    "end": 337,
+                                    "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                                }
+                            },
+                            "value": {
+                                "kind": "Str",
+                                "value": "outer",
+                                "location": {
+                                    "start": 340,
+                                    "end": 347,
+                                    "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                                }
+                            },
+                            "next": {
+                                "kind": "Let",
+                                "name": {
+                                    "text": "shadow",
+                                    "location": {
+                                        "start": 357,
+                                        "end": 363,
+                                        "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                                    }
+                                },
+                                "value": {
+                                    "kind": "Function",
+                                    "parameters": [],
+                                    "value": {
+                                        "kind": "Let",
+                                        "name": {
+                                            "text": "shadowed",
+                                            "location": {
+                                                "start": 388,
+                                                "end": 396,
+                                                "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                                            }
+                                        },
+                                        "value": {
+                                            "kind": "Str",
+                                            "value": "inner",
+                                            "location": {
+                                                "start": 399,
+                                                "end": 406,
+                                                "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                                            }
+                                        },
+                                        "next": {
+                                            "kind": "Var",
+                                            "text": "shadowed",
+                                            "location": {
+                                                "start": 416,
+                                                "end": 424,
+                                                "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                                            }
+                                        },
+                                        "location": {
+                                            "start": 384,
+                                            "end": 424,
+                                            "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                                        }
+                                    },
+                                    "location": {
+                                        "start": 366,
+                                        "end": 430,
+                                        "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                                    }
+                                },
+                                "next": {
+                                    "kind": "Binary",
+                                    "lhs": {
+                                        "kind": "Var",
+                                        "text": "shadowed",
+                                        "location": {
+                                            "start": 436,
+                                            "end": 444,
+                                            "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                                        }
+                                    },
+                                    "op": "Add",
+                                    "rhs": {
+                                        "kind": "Call",
+                                        "callee": {
+                                            "kind": "Var",
+                                            "text": "shadow",
+                                            "location": {
+                                                "start": 447,
+                                                "end": 453,
+                                                "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                                            }
+                                        },
+                                        "arguments": [],
+                                        "location": {
+                                            "start": 447,
+                                            "end": 455,
+                                            "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                                        }
+                                    },
+                                    "location": {
+                                        "start": 436,
+                                        "end": 455,
+                                        "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                                    }
+                                },
+                                "location": {
+                                    "start": 353,
+                                    "end": 455,
+                                    "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                                }
+                            },
+                            "location": {
+                                "start": 325,
+                                "end": 455,
+                                "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                            }
+                        },
+                        "location": {
+                            "start": 311,
+                            "end": 457,
+                            "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                        }
+                    },
+                    "next": {
+                        "kind": "Print",
+                        "value": {
+                            "kind": "Str",
+                            "value": "variables_test.rinha",
+                            "location": {
+                                "start": 466,
+                                "end": 488,
+                                "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                            }
+                        },
+                        "location": {
+                            "start": 460,
+                            "end": 489,
+                            "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                        }
+                    },
+                    "location": {
+                        "start": 292,
+                        "end": 489,
+                        "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                    }
+                },
+                "location": {
+                    "start": 98,
+                    "end": 489,
+                    "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+                }
+            },
+            "location": {
+                "start": 32,
+                "end": 489,
+                "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+            }
+        },
+        "location": {
+            "start": 0,
+            "end": 489,
+            "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+        }
+    },
+    "location": {
+        "start": 0,
+        "end": 489,
+        "filename": "./rinhac/test_data/compiler/variables_test.rinha"
+    }
+}
