@@ -30,7 +30,7 @@ Não é necessário instalar o Rinha Compiler, pois é um script Python autônom
 
 ### Uso
 
-1. Clone este repositório e navegue até o diretório em que o script `rinha_compiler.py` está localizado.
+1. Clone este repositório e navegue até a raiz em que o modulo `rinhac` está localizado.
 
 2. Abra um terminal no diretório mencionado.
 
